@@ -1,6 +1,6 @@
 <template lang="pug">
   #app
-    img(src='./assets/logo.png')
+    img(src='https://fhantons7.github.io/app-music/dist/logo.png')
     h1 musica en linea
     select(v-model="selectedCountry")
       option(v-for="country in countries" :value="country.value") {{ country.name }}
