@@ -5,8 +5,12 @@
     select(v-model="selectedCountry")
       option(v-for="country in countries" :value="country.value") {{ country.name }}
     ul
+      li
+        span(@click="clicks(p.n)" v-for="p in pages") {{p.n}}
+    ul
       Spinner(v-show="loading")
       artist(v-for="artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid")
+
 </template>
 
 <script>
@@ -25,7 +29,9 @@ export default {
         {name:'Colombia',value:'colombia'},
         {name:'Peru',value:'Peru'},
         {name:'Chile',value:'Chile'},
-      ]
+      ],
+      pages:[{'n':1},{'n':2},{'n':3},{'n':4},{'n':5}],
+      pagesSel:1
     }
   },
   components:{
@@ -37,12 +43,16 @@ export default {
       const self = this
       this.loading = true
       this.artists=[]
-      getArtist(this.selectedCountry)
+      getArtist(this.selectedCountry,this.pagesSel)
       .then(function(artist){
         self.artists = artist
         self.loading = false
       })
 
+    },
+    clicks(n){
+      this.pagesSel = n
+      this.refreshArtist()
     }
   },
   watch:{
@@ -85,6 +95,17 @@ a{
   select{
     padding: 10px;
     border:none;
+  }
+  ul li span{
+    padding: 10px 14px;
+    border: solid 1px #444;
+    border-radius: 20px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  ul li span:hover{
+    background:#42b983;
+    color: #fff;
   }
 </style>
 

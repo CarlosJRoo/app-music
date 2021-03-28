@@ -1,11 +1,12 @@
 import config from './config.js'
 const api_Key = config.APIkey
-const URL = `https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country=:pais&api_key=${api_Key}&format=json`;
+const URL = `https://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&page=:page&country=:pais&api_key=${api_Key}&format=json`;
 
-export default function getArtist(pais) {
+export default function getArtist(pais, page) {
 
-  const url = URL.replace(':pais', pais)
-  console.log(pais);
+  let urls = URL.replace(':page', page)
+  let url = urls.replace(':pais', pais)
+  console.log(url)
   return fetch(url)
     .then(res => res.json())
     .then(json => json.topartists.artist)
